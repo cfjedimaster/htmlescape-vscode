@@ -67,7 +67,7 @@ export function activate(context: vscode.ExtensionContext) {
 			
 			//Required since we're rendering in HTML itself...
 			str = str.replace(/&/g, "&amp;");
-			
+			str = str.replace(/\n/g,"<br/>");
 			return '<body><h1>Escaped HTML</h1>' + str;
         }
     }
