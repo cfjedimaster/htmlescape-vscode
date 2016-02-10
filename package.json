@@ -1,5 +1,5 @@
 {
-    "name": "htmlescap-vscode-extension",
+    "name": "htmlescape-vscode-extension",
     "displayName": "Escapes HTML code",
     "description": "Allows you to quickly convert HTML/JS/CSS code for publication on a blog.",
     "version": "0.0.1",
