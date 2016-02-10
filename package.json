@@ -3,7 +3,8 @@
     "displayName": "Escapes HTML code",
     "description": "Allows you to quickly convert HTML/JS/CSS code for publication on a blog.",
     "version": "0.0.1",
-    "publisher": "cfjedimaster",
+    "publisher": "raymondcamden",
+	"license":"MIT",
 	"bugs": {
 		"url": "https://github.com/cfjedimaster/htmlescape-vscode/issues",
 		"email": "raymondcamden@gmail.com"
