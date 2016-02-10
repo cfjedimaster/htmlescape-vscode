@@ -22,14 +22,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         private createEscapedHtml() {
-			console.log('createEscapedHtml');
             let editor = vscode.window.activeTextEditor;
-			/*
-            if (!(editor.document.languageId === 'css')) {
-                return this.errorSnippet("Active editor doesn't show a CSS document - no properties to preview.")
-            }
-			*/
-			console.log(this.extractSnippet());
             return this.extractSnippet();
         }
 
@@ -88,7 +81,6 @@ export function activate(context: vscode.ExtensionContext) {
     })
 
     let disposable = vscode.commands.registerCommand('extension.showHtmlEscape', () => {
-		console.log('running dis');
         return vscode.commands.executeCommand('vscode.previewHtml', previewUri, vscode.ViewColumn.Two).then((success) => {
         }, (reason) => {
             vscode.window.showErrorMessage(reason);
