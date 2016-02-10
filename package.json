@@ -1,0 +1,44 @@
+{
+    "name": "htmlescap-vscode-extension",
+    "displayName": "Escapes HTML code",
+    "description": "Allows you to quickly convert HTML/JS/CSS code for publication on a blog.",
+    "version": "0.0.1",
+    "publisher": "cfjedimaster",
+	"bugs": {
+		"url": "https://github.com/cfjedimaster/htmlescape-vscode/issues",
+		"email": "raymondcamden@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/cfjedimaster/htmlescape-vscode.git"
+	},
+    "homepage": "https://github.com/Microsoft/vscode-extension-samples/tree/master/textdocumentprovider-sample/README.md",	
+	"categories": [
+		"Other"
+	],
+    "engines": {
+        "vscode": "^0.10.7"
+    },
+    "activationEvents": [
+        "onCommand:extension.showHtmlEscape"
+    ],
+    "main": "./out/src/extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.showHtmlEscape",
+                "title": "Show Escaped HTML"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+        "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "tslint": "tslint -c tslint.json src/extension.ts"
+    },
+    "devDependencies": {
+        "typescript": "^1.7.5",
+        "vscode": "^0.11.0"
+    }
+}
