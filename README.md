@@ -16,4 +16,8 @@ the entire document.
 
 ![Example](images/preview.gif)
 
+# Updates
+
+0.0.3 I switched the display to use a textarea. This makes it - hopefully - a bit easier to get the code. It also helps preserve tabs. Unfortunately, you can't CTRL+A in the textarea. Not sure why. 
+
 

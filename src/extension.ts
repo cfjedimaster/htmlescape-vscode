@@ -52,7 +52,6 @@ export function activate(context: vscode.ExtensionContext) {
 
             str = str.replace(/&/g, "&amp;");
             str = str.replace(/</g, "&lt;");
-			console.log('ok, wtf, i should have esvaped html now '+str);
             str = str.replace(/>/g, "&gt;");
             str = str.replace(/"/g, "&quot;");
             str = str.replace(/'/g, "&#x27;");
@@ -60,8 +59,12 @@ export function activate(context: vscode.ExtensionContext) {
 			
 			//Required since we're rendering in HTML itself...
 			str = str.replace(/&/g, "&amp;");
-			str = str.replace(/\n/g,"<br/>");
-			return '<body><h1>Escaped HTML</h1>' + str;
+
+			return `
+			<body><h1>Escaped HTML</h1>
+			<textarea style='width:100%;height:100%'>${str}</textarea>
+			</body>
+			`
         }
     }
 
