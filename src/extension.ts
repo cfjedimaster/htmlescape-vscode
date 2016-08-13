@@ -1,3 +1,6 @@
+/*---------------------------------------------------------
+ * Copyright (C) Microsoft Corporation. All rights reserved.
+ *--------------------------------------------------------*/
 'use strict';
 
 import * as vscode from 'vscode';
@@ -10,7 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
         private _onDidChange = new vscode.EventEmitter<vscode.Uri>();
 
         public provideTextDocumentContent(uri: vscode.Uri): string {
-            return this.createEscapedHtml();
+            return this.createEscapedHTML();
         }
 
         get onDidChange(): vscode.Event<vscode.Uri> {
@@ -21,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
             this._onDidChange.fire(uri);
         }
 
-        private createEscapedHtml() {
+        private createEscapedHTML() {
             let editor = vscode.window.activeTextEditor;
             return this.extractSnippet();
         }
@@ -48,7 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
                 </body>`;
         }
 
-        private snippet(str): string {
+        private snippet(str: string): string {
 
             str = str.replace(/&/g, "&amp;");
             str = str.replace(/</g, "&lt;");
@@ -61,8 +64,20 @@ export function activate(context: vscode.ExtensionContext) {
 			str = str.replace(/&/g, "&amp;");
 
 			return `
-			<body><h1>Escaped HTML</h1>
-			<textarea style='width:100%;height:100%'>${str}</textarea>
+            <style>
+            body {
+                margin-top:10px;
+                margin-left:10px;
+                margin-right:10px;
+            }
+            
+            textarea {
+                width:95%;
+                height:500px;
+            }
+            </style>
+			<body>
+			<textarea>${str}</textarea>
 			</body>
 			`
         }
@@ -84,12 +99,27 @@ export function activate(context: vscode.ExtensionContext) {
     })
 
     let disposable = vscode.commands.registerCommand('extension.showHtmlEscape', () => {
-        return vscode.commands.executeCommand('vscode.previewHtml', previewUri, vscode.ViewColumn.Two).then((success) => {
+        return vscode.commands.executeCommand('vscode.previewHtml', previewUri, vscode.ViewColumn.Two, 'Escaped HTML').then((success) => {
         }, (reason) => {
             vscode.window.showErrorMessage(reason);
         });
-
     });
+
+    let highlight = vscode.window.createTextEditorDecorationType({ backgroundColor: 'rgba(200,200,200,.35)' });
+
+    vscode.commands.registerCommand('extension.showHtmlEscape', (uri: vscode.Uri, propStart: number, propEnd: number) => {
+
+        for (let editor of vscode.window.visibleTextEditors) {
+            if (editor.document.uri.toString() === uri.toString()) {
+                let start = editor.document.positionAt(propStart);
+                let end = editor.document.positionAt(propEnd + 1);
+
+                editor.setDecorations(highlight, [new vscode.Range(start, end)]);
+                setTimeout(() => editor.setDecorations(highlight, []), 1500);
+            }
+        }
+    });
+
     context.subscriptions.push(disposable, registration);
 }
 
