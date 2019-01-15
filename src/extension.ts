@@ -38,7 +38,7 @@ export function activate(context: vscode.ExtensionContext) {
 			} else {
 				console.log('return selection');
 				//there must be a better way of doing this
-	            let selStart = editor.document.offsetAt(editor.selection.anchor);
+	            let selStart = editor.document.offsetAt(editor.selection.start);
 				let selEnd = editor.document.offsetAt(editor.selection.end);
 				return this.snippet(editor.document.getText().slice(selStart,selEnd));
 			}
