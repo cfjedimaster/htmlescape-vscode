@@ -25,6 +25,9 @@ the entire document.
 [MIT](LICENSE)
 
 # Updates
+
+0.0.5 Merge PR by Oleg Karasik (https://github.com/cfjedimaster/htmlescape-vscode/pull/1)
+
 0.0.4 I switched the code to copy/mimic this MS example (https://github.com/Microsoft/vscode-extension-samples/tree/master/previewhtml-sample) and it seems to have fixed the copy/paste issue. One problem I have now though is that I can't get the textarea to be 100% big. I had to pick a size and just hope it works out ok. I also don't honestly know what a few lines of this code does. :)
 
 0.0.3 I switched the display to use a textarea. This makes it - hopefully - a bit easier to get the code. It also helps preserve tabs. Unfortunately, you can't CTRL+A in the textarea. Not sure why. 
