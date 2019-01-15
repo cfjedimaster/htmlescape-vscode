@@ -1,6 +1,6 @@
 # HTML Escape Extension
 
-[![License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/cfjedimaster/htmlescape-vscode/master/LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/cfjedimaster/htmlescape-vscode/master/LICENSE)
 [![Version](https://vsmarketplacebadge.apphb.com/version/raymondcamden.htmlescape-vscode-extension.svg)](https://marketplace.visualstudio.com/items?itemName=raymondcamden.htmlescape-vscode-extension)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs/raymondcamden.htmlescape-vscode-extension.svg)](https://marketplace.visualstudio.com/items?itemName=raymondcamden.htmlescape-vscode-extension)
 [![Ratings](https://vsmarketplacebadge.apphb.com/rating/raymondcamden.htmlescape-vscode-extension.svg)](https://marketplace.visualstudio.com/items?itemName=raymondcamden.htmlescape-vscode-extension)
