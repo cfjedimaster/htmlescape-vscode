@@ -2,7 +2,7 @@
     "name": "htmlescape-vscode-extension",
     "displayName": "Escape HTML code",
     "description": "Allows you to quickly convert HTML/JS/CSS code for publication on a blog.",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "publisher": "raymondcamden",
 	"license":"MIT",
 	"bugs": {
