@@ -18,20 +18,21 @@ export function activate(context: vscode.ExtensionContext) {
         let previewEditorShowOptions: vscode.TextDocumentShowOptions = {
             viewColumn: vscode.ViewColumn.Beside, 
             preview: true,
-            preserveFocus: true
+            preserveFocus: true,
+            selection: new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 0))
         };
 
         await vscode.window.showTextDocument(previewDocument, previewEditorShowOptions);
 
         let activeTextEditor = vscode.window.activeTextEditor;
         if (activeTextEditor && activeTextEditor.document.uri.scheme != htmlEsc.HtmlEscapeTextDocumentContentProvider.scheme) {
-            provider.show(previewUri, activeTextEditor.document.uri);
+            provider.show(previewUri, activeTextEditor.document.uri, activeTextEditor.selections);
         }
     }));
 
     vscode.window.onDidChangeActiveTextEditor(async activeTextEditor => {
         if (activeTextEditor && activeTextEditor.document.uri.scheme != htmlEsc.HtmlEscapeTextDocumentContentProvider.scheme) {
-            provider.show(previewUri, activeTextEditor.document.uri);
+            provider.show(previewUri, activeTextEditor.document.uri, activeTextEditor.selections);
         }
     }, this, context.subscriptions);
 
