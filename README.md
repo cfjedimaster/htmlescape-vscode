@@ -20,6 +20,8 @@ To use, simply open a file and run `Show Escaped HTML`. If no text is selected, 
 
 # Updates
 
+0.0.6 Significant update by Oleg Karasik again! Please see the details here <https://github.com/cfjedimaster/htmlescape-vscode/pull/2>.
+
 0.0.5 Merge PR by Oleg Karasik (https://github.com/cfjedimaster/htmlescape-vscode/pull/1)
 
 0.0.4 I switched the code to copy/mimic this MS example (https://github.com/Microsoft/vscode-extension-samples/tree/master/previewhtml-sample) and it seems to have fixed the copy/paste issue. One problem I have now though is that I can't get the textarea to be 100% big. I had to pick a size and just hope it works out ok. I also don't honestly know what a few lines of this code does. :)
