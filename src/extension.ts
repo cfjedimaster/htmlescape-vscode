@@ -1,126 +1,47 @@
-/*---------------------------------------------------------
- * Copyright (C) Microsoft Corporation. All rights reserved.
- *--------------------------------------------------------*/
 'use strict';
 
 import * as vscode from 'vscode';
-
+import * as htmlEsc from './html-escape/html-escape';
+ 
 export function activate(context: vscode.ExtensionContext) {
+    const id: string = '30E6F79F-8885-4955-91BB-3FA8ED71ECF8';
+    const name: string = 'Escaped Html';
+    const previewUri: vscode.Uri = htmlEsc.createPreviewUri(name, id);
 
-    let previewUri = vscode.Uri.parse('html-escape://cfjedimaster/html-escape');
+    const provider = new htmlEsc.HtmlEscapeTextDocumentContentProvider();
 
-    class TextDocumentContentProvider implements vscode.TextDocumentContentProvider {
-        private _onDidChange = new vscode.EventEmitter<vscode.Uri>();
+    context.subscriptions.push(
+        vscode.workspace.registerTextDocumentContentProvider(htmlEsc.HtmlEscapeTextDocumentContentProvider.scheme, provider));
 
-        public provideTextDocumentContent(uri: vscode.Uri): string {
-            return this.createEscapedHTML();
+    context.subscriptions.push(vscode.commands.registerCommand('extension.showHtmlEscape', async () => {
+        let previewDocument = await vscode.workspace.openTextDocument(previewUri);
+        let previewEditorShowOptions: vscode.TextDocumentShowOptions = {
+            viewColumn: vscode.ViewColumn.Beside, 
+            preview: true,
+            preserveFocus: true,
+            selection: new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 0))
+        };
+
+        await vscode.window.showTextDocument(previewDocument, previewEditorShowOptions);
+
+        let activeTextEditor = vscode.window.activeTextEditor;
+        if (activeTextEditor && activeTextEditor.document.uri.scheme != htmlEsc.HtmlEscapeTextDocumentContentProvider.scheme) {
+            provider.show(previewUri, activeTextEditor.document.uri, activeTextEditor.selections);
         }
+    }));
 
-        get onDidChange(): vscode.Event<vscode.Uri> {
-            return this._onDidChange.event;
+    vscode.window.onDidChangeActiveTextEditor(async activeTextEditor => {
+        if (activeTextEditor && activeTextEditor.document.uri.scheme != htmlEsc.HtmlEscapeTextDocumentContentProvider.scheme) {
+            provider.show(previewUri, activeTextEditor.document.uri, activeTextEditor.selections);
         }
+    }, this, context.subscriptions);
 
-        public update(uri: vscode.Uri) {
-            this._onDidChange.fire(uri);
+    vscode.window.onDidChangeTextEditorSelection(async event => {
+        let editor = event.textEditor;
+        if (editor && editor.document.uri.scheme != htmlEsc.HtmlEscapeTextDocumentContentProvider.scheme) {
+            provider.show(previewUri, editor.document.uri, event.selections);
         }
-
-        private createEscapedHTML() {
-            let editor = vscode.window.activeTextEditor;
-            return this.extractSnippet();
-        }
-
-        private extractSnippet(): string {
-            let editor = vscode.window.activeTextEditor;
-			//if we have a selection, use that, otherwise, whole document
-			console.log('is it empty? '+editor.selection.isEmpty);
-			if(editor.selection.isEmpty) {
-	            return this.snippet(editor.document.getText());
-			} else {
-				console.log('return selection');
-				//there must be a better way of doing this
-	            let selStart = editor.document.offsetAt(editor.selection.start);
-				let selEnd = editor.document.offsetAt(editor.selection.end);
-				return this.snippet(editor.document.getText().slice(selStart,selEnd));
-			}
-        }
-
-        private errorSnippet(error: string): string {
-            return `
-                <body>
-                    ${error}
-                </body>`;
-        }
-
-        private snippet(str: string): string {
-
-            str = str.replace(/&/g, "&amp;");
-            str = str.replace(/</g, "&lt;");
-            str = str.replace(/>/g, "&gt;");
-            str = str.replace(/"/g, "&quot;");
-            str = str.replace(/'/g, "&#x27;");
-            str = str.replace(/\//g, "&#x2F;");
-			
-			//Required since we're rendering in HTML itself...
-			str = str.replace(/&/g, "&amp;");
-
-			return `
-            <style>
-            body {
-                margin-top:10px;
-                margin-left:10px;
-                margin-right:10px;
-            }
-            
-            textarea {
-                width:95%;
-                height:500px;
-            }
-            </style>
-			<body>
-			<textarea>${str}</textarea>
-			</body>
-			`
-        }
-    }
-
-    let provider = new TextDocumentContentProvider();
-    let registration = vscode.workspace.registerTextDocumentContentProvider('html-escape', provider);
-
-    vscode.workspace.onDidChangeTextDocument((e: vscode.TextDocumentChangeEvent) => {
-        if (e.document === vscode.window.activeTextEditor.document) {
-            provider.update(previewUri);
-        }
-    });
-
-    vscode.window.onDidChangeTextEditorSelection((e: vscode.TextEditorSelectionChangeEvent) => {
-        if (e.textEditor === vscode.window.activeTextEditor) {
-            provider.update(previewUri);
-        }
-    })
-
-    let disposable = vscode.commands.registerCommand('extension.showHtmlEscape', () => {
-        return vscode.commands.executeCommand('vscode.previewHtml', previewUri, vscode.ViewColumn.Two, 'Escaped HTML').then((success) => {
-        }, (reason) => {
-            vscode.window.showErrorMessage(reason);
-        });
-    });
-
-    let highlight = vscode.window.createTextEditorDecorationType({ backgroundColor: 'rgba(200,200,200,.35)' });
-
-    vscode.commands.registerCommand('extension.showHtmlEscape', (uri: vscode.Uri, propStart: number, propEnd: number) => {
-
-        for (let editor of vscode.window.visibleTextEditors) {
-            if (editor.document.uri.toString() === uri.toString()) {
-                let start = editor.document.positionAt(propStart);
-                let end = editor.document.positionAt(propEnd + 1);
-
-                editor.setDecorations(highlight, [new vscode.Range(start, end)]);
-                setTimeout(() => editor.setDecorations(highlight, []), 1500);
-            }
-        }
-    });
-
-    context.subscriptions.push(disposable, registration);
+    }, this, context.subscriptions);
 }
 
 export function deactivate() {
