@@ -5,11 +5,17 @@
 [![Installs](https://vsmarketplacebadge.apphb.com/installs/raymondcamden.htmlescape-vscode-extension.svg)](https://marketplace.visualstudio.com/items?itemName=raymondcamden.htmlescape-vscode-extension)
 [![Ratings](https://vsmarketplacebadge.apphb.com/rating/raymondcamden.htmlescape-vscode-extension.svg)](https://marketplace.visualstudio.com/items?itemName=raymondcamden.htmlescape-vscode-extension)
 
-This is a Visual Studio Code extension that simply converts any text into web-ready text that can be used in a blog entry. So for example, a `&lt;` character will become `&amp;lt;`. 
+This is a Visual Studio Code extension that simply converts any text into web-ready text that can be used in a blog entry. So for example, a `<` character will become `&lt;`. There are two uses of it:
 
-To use, simply open a file and run `Show Escaped HTML`. If no text is selected, it will convert the entire document.
+### Open in Preview Document
+
+To use, simply open a file and run `Show Escaped HTML`. If no text is selected, it will convert the entire document. The result is opened in a preview document to the side:
 
 ![Example](images/preview.gif)
+
+### Replace in Document
+
+To use this feature, you must have selected text (I'm open to changing this). Select text, run `Replace Selection with Escaped HTML` and the current selection will be escaped in the document itself. 
 
 ## License
 [MIT](LICENSE)

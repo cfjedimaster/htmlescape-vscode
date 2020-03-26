@@ -239,3 +239,7 @@ export class HtmlEscapeTextDocumentContentProvider implements vscode.TextDocumen
 export function createPreviewUri(name: string, id: string): vscode.Uri {
     return vscode.Uri.parse(`${HtmlEscapeTextDocumentContentProvider.scheme}://${HtmlEscapeTextDocumentContentProvider.previewDocument}/${name}?id=${id}`)
 }
+
+export function escaper(input: string): string {
+    return escapeHtml(input);
+}

@@ -30,6 +30,14 @@ export function activate(context: vscode.ExtensionContext) {
         }
     }));
 
+    context.subscriptions.push(vscode.commands.registerCommand('extension.replaceHtmlEscape', async () => {
+        const editor = vscode.window.activeTextEditor;
+        const selection = editor.selection
+        const text = editor.document.getText(selection);
+        let newText = htmlEsc.escaper(text);
+        editor.edit(builder => builder.replace(selection, newText));
+    }));
+
     vscode.window.onDidChangeActiveTextEditor(async activeTextEditor => {
         if (activeTextEditor && activeTextEditor.document.uri.scheme != htmlEsc.HtmlEscapeTextDocumentContentProvider.scheme) {
             provider.show(previewUri, activeTextEditor.document.uri, activeTextEditor.selections);

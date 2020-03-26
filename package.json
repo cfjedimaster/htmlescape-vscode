@@ -2,7 +2,7 @@
     "name": "htmlescape-vscode-extension",
     "displayName": "Escape HTML code",
     "description": "Allows you to quickly convert HTML/JS/CSS code for publication on a blog.",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "publisher": "raymondcamden",
     "license": "MIT",
     "bugs": {
@@ -21,7 +21,8 @@
         "vscode": "^1.25.0"
     },
     "activationEvents": [
-        "onCommand:extension.showHtmlEscape"
+        "onCommand:extension.showHtmlEscape",
+        "onCommand:extension.replaceHtmlEscape"
     ],
     "main": "./out/src/extension",
     "contributes": {
@@ -29,6 +30,10 @@
             {
                 "command": "extension.showHtmlEscape",
                 "title": "Show Escaped HTML"
+            },
+            {
+                "command": "extension.replaceHtmlEscape",
+                "title": "Replace Selection with Escaped HTML"
             }
         ],
         "menus": {
@@ -36,6 +41,10 @@
                 {
                     "command": "extension.showHtmlEscape",
                     "when": "editorIsOpen"
+                },
+                {
+                    "command": "extension.replaceHtmlEscape",
+                    "when": "editorHasSelection"
                 }
             ]
         }
