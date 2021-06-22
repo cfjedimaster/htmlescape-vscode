@@ -2,7 +2,7 @@
 
 import * as vscode from 'vscode';
 import * as htmlEsc from './html-escape/html-escape';
- 
+
 export function activate(context: vscode.ExtensionContext) {
     const id: string = '30E6F79F-8885-4955-91BB-3FA8ED71ECF8';
     const name: string = 'Escaped Html';
@@ -16,7 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand('extension.showHtmlEscape', async () => {
         let previewDocument = await vscode.workspace.openTextDocument(previewUri);
         let previewEditorShowOptions: vscode.TextDocumentShowOptions = {
-            viewColumn: vscode.ViewColumn.Beside, 
+            viewColumn: vscode.ViewColumn.Beside,
             preview: true,
             preserveFocus: true,
             selection: new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 0))
@@ -32,10 +32,13 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(vscode.commands.registerCommand('extension.replaceHtmlEscape', async () => {
         const editor = vscode.window.activeTextEditor;
-        const selection = editor.selection
-        const text = editor.document.getText(selection);
-        let newText = htmlEsc.escaper(text);
-        editor.edit(builder => builder.replace(selection, newText));
+        await editor.edit(async builder => {
+            await editor.selections.forEach(async selection => {
+                const text = editor.document.getText(selection);
+                let newText = htmlEsc.escaper(text);
+                builder.replace(selection, newText);
+            });
+        });
     }));
 
     vscode.window.onDidChangeActiveTextEditor(async activeTextEditor => {
