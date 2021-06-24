@@ -57,9 +57,9 @@
     },
     "devDependencies": {
         "@types/node": "^8.10.25",
-        "tslint": "^5.20.1",
+        "tslint": "^5.11.0",
         "typescript": "^2.6.1",
-        "vscode": "^0.9.9"
+        "vscode": "^1.1.22"
     },
     "dependencies": {
         "@types/escape-html": "0.0.20",
